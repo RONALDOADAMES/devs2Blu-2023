@@ -43,7 +43,8 @@ public class Main {
 
 			switch (opcaoSelecionada) {
 			case 1:
-				JOptionPane.showInputDialog(montarSubMenuGeral("Funcionários"));
+				int opcao = Integer.parseInt(JOptionPane.showInputDialog(montarSubMenuFuncionarios()));
+				operacaoFuncionario(opcao);
 				break;
 
 			case 2:
@@ -71,12 +72,24 @@ public class Main {
 				break;
 
 			default:
+				
+				
 
 				JOptionPane.showMessageDialog(null, "Escolha um opção válida");
 
 				break;
 			}
 		}
+	}
+
+	private static void operacaoFuncionario(int opcao) {
+		
+		
+	}
+
+	private static Object montarSubMenuFuncionarios() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	private static void showMessageDialog(Object object, String montarMenuPrincipal) {
@@ -222,20 +235,19 @@ public class Main {
 		builder.append("03 -Excluir ");
 		builder.append("04 -Consultar ");
 		builder.append("05 -Listar todos ");
+
+		return builder.toString();
+	}
+
+	public static String montarMenuFuncionarios() {
+		String submenuGeral = montarSubMenuGeral("Funcionários");
+		
+		StringBuilder builder = new StringBuilder();
+		builder.append(submenuGeral);
+		builder.append("\n");
+		builder.append("06 -Consultar Garçons Disponíveis \n ");
+		builder.append("07 - Voltar");
 		
 		return builder.toString();
 	}
-	
-	
-	
 }
-
-
-
-
-
-
-
-
-
-
