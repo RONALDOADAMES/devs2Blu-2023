@@ -29,5 +29,6 @@ public class Cliente extends Pessoa {
 
 	public void setVip(boolean vip) {
 		this.vip = vip;
-	}	
+	}	   
+	
 }
