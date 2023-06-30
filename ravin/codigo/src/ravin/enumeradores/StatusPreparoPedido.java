@@ -2,10 +2,9 @@ package ravin.enumeradores;
 
 public enum StatusPreparoPedido {
 	
-	SOLICIDADO,
+	SOLICITADO,
 	PRONTO,
 	PREPARADO,
 	ENTREGUE
-	
 
 }
