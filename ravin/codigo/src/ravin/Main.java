@@ -70,7 +70,7 @@ public class Main {
 
 	}
 
-	private static void operacaoFuncionario(int opcao, FuncionarioController controller) {
+	private static void operacaoFuncionario(int opcao, FuncionarioController funcionarioController) {
 		Funcionario funcionario = null;
 		List<Funcionario> funcionarios = null;
 
@@ -80,40 +80,72 @@ public class Main {
 			funcionario = mostrarMenuCadastrarFuncionario();
 
 			try {
-				controller.cadastrar(funcionario);
+				funcionarioController.cadastrar(funcionario);
 			} catch (Exception e) {
 				JOptionPane.showMessageDialog(null, e.getMessage());
 			}
 			
 			break;
 		case 2: //alterar
-			funcionario = mostrarMenuAlterarFuncionario();
+			
+			funcionarios = funcionarioController.listarTodos();
+			int idFuncionarioAlterar = mostrarMenuLerIdFuncionarioAlterar(funcionarios);
+			Funcionario funcionarioAlterar = funcionarioController.consultar(idFuncionarioAlterar);
+			mostrarMenuAlterarFuncionario(funcionarioAlterar);
+			
+			
+			funcionario = mostrarMenuAlterarFuncionario(funcionarioAlterar);
 			break;
 
 		case 3: //excluir
 			id = mostrarMenuExcluirFuncionario();
-			controller.excluir(id);
+			funcionarioController.excluir(id);
 			break;
 
 		case 4: //consultar
 			id = mostrarMenuConsultarFuncionario();
-			Funcionario funcionarioBuscado = controller.consultar(id);
+			Funcionario funcionarioBuscado = funcionarioController.consultar(id);
 			JOptionPane.showMessageDialog(null, funcionarioBuscado);
 			break;
 
 		case 5: 
-			funcionarios = controller.listarTodos();
+			funcionarios = funcionarioController.listarTodos();
 			listarFuncionarios(funcionarios);
 			break;
 
 		case 6:
-			funcionarios = controller.listarDisponiveis();
+			funcionarios = funcionarioController.listarGarconsDisponiveis();
 			listarGarconsDisponiveis(funcionarios);
 			break;
 
 		default:
 
 		}
+	}
+
+	private static int mostrarMenuLerIdFuncionarioAlterar(List<Funcionario> funcionarios) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	private static int mostrarMenuFuncionariosAlterar(List<Funcionario> funcionarios) {
+		StringBuilder builder = new StringBuilder();
+		// var builder = new StringBuilder();
+		
+		builder.append(" ==================== Lista de Funcionários ==================== ");
+		builder.append("\n");
+		
+		for (Funcionario funcionario : funcionarios) {
+			builder.append(funcionario.getId());
+			builder.append(" - ");
+			builder.append(funcionario.getNome());
+			builder.append("\n");
+			
+		}
+		
+		builder.append("Digite o id do funcionário que você deseja alterar");
+			
+		return Integer.parseInt(JOptionPane.showInputDialog(builder.toString()));
 	}
 
 	private static void listarGarconsDisponiveis(List<Funcionario> funcionarios) {
@@ -154,20 +186,18 @@ public class Main {
 		return Integer.parseInt(JOptionPane.showInputDialog("Digite o id do funcionário que você deseja excluir"));
 	}
 
-	private static Funcionario mostrarMenuAlterarFuncionario() {
-		Funcionario funcionario = new Funcionario();
-		funcionario.setId(Integer.parseInt(JOptionPane.showInputDialog("Digite o id do funcionario que você deseja alterar")));
-		funcionario.setRg(JOptionPane.showInputDialog("Digite o RG do funcionário:"));
-		funcionario.setEstadoCivil(EstadoCivil.values()[Integer.parseInt(JOptionPane.showInputDialog(
+	private static Funcionario mostrarMenuAlterarFuncionario(Funcionario funcionarioAlterar) {
+		funcionarioAlterar.setRg(JOptionPane.showInputDialog("Digite o RG do funcionário:"));
+		funcionarioAlterar.setEstadoCivil(EstadoCivil.values()[Integer.parseInt(JOptionPane.showInputDialog(
 				"Digite o estado civíl do funcionario: \n [0 - Solteiro \n 1 - Casado \n 2 - Viúvo \n 3 - Divorciado \n 4 - Separado]"))]);
-		funcionario.setCargo(Cargo.values()[Integer.parseInt(JOptionPane.showInputDialog(
+		funcionarioAlterar.setCargo(Cargo.values()[Integer.parseInt(JOptionPane.showInputDialog(
 				"Digite o cargo do funcionário: \n 0 - Faxineiro \n 1 - Garçom \n 2 - Cozinheiro \n 3 - Gerente"))]);
-		funcionario.setEscolaridade(Escolaridade.values()[Integer.parseInt(JOptionPane.showInputDialog(
+		funcionarioAlterar.setEscolaridade(Escolaridade.values()[Integer.parseInt(JOptionPane.showInputDialog(
 				"Digite a escolaridade do funcionario: \n 0 - Fundamental \n 1 - Médio \n 2 - Superior "))]);
-		funcionario.setPis(Integer.parseInt(JOptionPane.showInputDialog("Digite o PIS do funcionário")));
-		funcionario.setDataAdmissao(new Date());
+		funcionarioAlterar.setPis(Integer.parseInt(JOptionPane.showInputDialog("Digite o PIS do funcionário")));
+		funcionarioAlterar.setDataAdmissao(new Date());
 		
-		return funcionario;
+		return funcionarioAlterar;
 	}
 
 	public static Pessoa cadastrarPessoa() {
